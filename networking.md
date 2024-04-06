@@ -8,6 +8,17 @@
 
  nmap -A Target (Aggressive scan)
 
+ nmap -sV Tagert -oX scan.xml (For xml)
+
+ nmap -sV Tagert -oN scan (Normal/txt format)
+
+ 
+ ###### Open Nmap XML file
+ 
+Paste the below code and save it as script.vba. Then open it, your internet explorer will open.
+
+ CreateObject("InternetExplorer.Application").Visible=true
+
 #### Kali Commands
 sudo -l (To check all the permissions provided to the current user after using sudo command)
  
