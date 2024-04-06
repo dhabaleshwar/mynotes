@@ -1,6 +1,21 @@
 #### Nmap
 
  nmap -Pn -sV Target
+ 
+ nmap -sV -sC 10.10.91.172 -Pn
+
+ #### Searchsploit
+
+ searchsploit service version
+ 
+ searchsploit -m number_of_the_exploit(like 42233)
+ 
+ Go to the directory where it is downloaded it would be the same directory.
+
+ open it, cat 42233.txt and read it.
+
+ 
+
 
 ### Port 21
 #### Hydra
