@@ -178,6 +178,12 @@ set HttpPassword tomcat
 
 xfreerdp /u:wade /p:parzival /v:10.10.167.18  (Connect using Linux)
 
+### Port 3306
+
+hydra -L usernames.txt -P passwords.txt 192.168.1.100 mysql
+
+mysql -h example.com -u root -p
+
 ### Nessus
 
 nessus ( command /bin/systemctl start nessusd.service, the go to https://localhost:8834/#/ and login, root, Root@123 in windows)
