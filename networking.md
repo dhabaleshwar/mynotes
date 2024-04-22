@@ -12,8 +12,13 @@
 
  nmap -sV Tagert -oN scan (Normal/txt format)
 
- 
- ###### Open Nmap XML file
+##### Full TCP SCAN
+nmap -Pn -iL myip.txt -sV -A -sC -O -p 0-65535 --min-rate 1000 --max-retries 2 -vv -oX myip.xml
+
+##### Full UDP SCAN
+nmap -sU --top-ports 1000 -iL myip.txt -oX myip_udp.xml
+
+###### Open Nmap XML file
  
 Paste the below code and save it as script.vba. Then open it, your internet explorer will open.
 
