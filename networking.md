@@ -213,3 +213,12 @@ C:\Windows\system32>net start "Tenable Nessus"
 Stop	
 
 C:\Windows\system32>net stop "Tenable Nessus"
+
+#### For Linux
+
+systemctl start nessusd.service
+
+https://IP:11127
+
+User: admin
+Pass: admin
